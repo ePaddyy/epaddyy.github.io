@@ -180,9 +180,9 @@ strong {
   top: 0;
   z-index: 100;
   height: var(--header-h);
-  background: color-mix(in srgb, var(--bg) 85%, transparent);
-  backdrop-filter: saturate(180%) blur(12px);
-  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  /* Near-opaque instead of a backdrop-filter blur: the blur cost ~2s of
+     style/layout work on mobile in Lighthouse for almost no visual gain. */
+  background: color-mix(in srgb, var(--bg) 97%, transparent);
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s;
 }

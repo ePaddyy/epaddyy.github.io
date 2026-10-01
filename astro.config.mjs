@@ -7,6 +7,7 @@ export default defineConfig({
   // Production URL. Used for canonical links, the sitemap and social-preview images.
   site: 'https://epaddyy.github.io',
   trailingSlash: 'always',
+  // Redirects from the old /Portfolio/ addresses live in public/Portfolio/ (plain HTML files).
   integrations: [sitemap()],
   // No code blocks on the site; Shiki's inline styles would also conflict with the CSP.
   markdown: { syntaxHighlight: false },

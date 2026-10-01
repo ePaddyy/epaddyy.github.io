@@ -46,9 +46,16 @@ jobs:
       - uses: lycheeverse/lychee-action@v2
         with:
           # Check every link in the built site; internal links resolve against dist/.
+          # Excluded: the site's own absolute URLs (canonical/og tags; checked via dist/ instead,
+          # and may not be deployed yet), sites that block automated checkers (X, LinkedIn),
+          # and the Formspree endpoint (a form target that rejects plain GET requests).
           args: >-
             --root-dir ${{ github.workspace }}/dist
             --exclude-path dist/og
+            --exclude '^https://epaddyy\.github\.io'
+            --exclude '^https://(www\.)?(x|twitter)\.com'
+            --exclude '^https://(www\.)?linkedin\.com'
+            --exclude '^https://formspree\.io'
             --accept 200,204,429
             --max-retries 3
             --no-progress
