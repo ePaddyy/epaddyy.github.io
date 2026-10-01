@@ -8,6 +8,7 @@ metric:
   name: Items analysed
   value: 8,523
 tags: [SQL, Power BI, DAX, Data cleaning]
+repo: https://github.com/ePaddyy/Blinkit-Grocery-Sales-Analysis
 approach: Standardised inconsistent category labels in SQL (five spellings of "Low Fat" and "Regular" merged into two), computed KPIs (total and average sales, item count, average rating), and broke sales down by item type, outlet tier and fat content with grouped and pivoted queries before building the Power BI dashboard.
 impact: Shows where revenue comes from (fruits & vegetables and snack foods lead), giving a retail team a clear view of which categories and outlet types to prioritise.
 ---
