@@ -1,0 +1,72 @@
+---
+import Icon from './Icon.astro';
+import { categoryLabels, projectUrl, type Project } from '../lib/content';
+
+interface Props {
+  project: Project;
+  /** Span the full grid row. */
+  wide?: boolean;
+  /** Heading level, so cards nest correctly under the page's headings. */
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { project, wide = false, headingLevel: Heading = 'h3' } = Astro.props;
+const { data } = project;
+const caseStudyUrl = data.caseStudy ? projectUrl(project) : undefined;
+---
+
+<article class:list={['project-card', 'reveal', { 'is-featured': wide }]} data-cat={data.category}>
+  <div class="project-top">
+    <span class="project-icon">
+      <Icon name={data.icon} size={20} />
+    </span>
+    <span class="project-cat">{categoryLabels[data.category]}</span>
+    {data.status === 'in-progress' && <span class="project-status">In progress</span>}
+    {data.metric && (
+      <span class="project-metric" title={data.metric.note}>
+        <strong>{data.metric.value}</strong> {data.metric.name}
+      </span>
+    )}
+  </div>
+
+  <Heading class="project-title">
+    {caseStudyUrl ? <a href={caseStudyUrl}>{data.title}</a> : data.title}
+  </Heading>
+  <p class="project-desc">{data.summary}</p>
+
+  <ul class="tag-list" aria-label="Technologies">
+    {data.tags.map((tag) => (
+      <li>{tag}</li>
+    ))}
+  </ul>
+
+  <details class="project-details">
+    <summary>Approach &amp; impact</summary>
+    <div class="project-details-body">
+      <h4>Approach</h4>
+      <p>{data.approach}</p>
+      <h4>Why it matters</h4>
+      <p>{data.impact}</p>
+    </div>
+  </details>
+
+  <div class="project-links">
+    {caseStudyUrl && (
+      <a href={caseStudyUrl} class="project-link is-primary">
+        Read case study →
+      </a>
+    )}
+    {data.demo && (
+      <a href={data.demo} target="_blank" rel="noopener" class="project-link">
+        Live demo <Icon name="arrow-up-right" size={14} />
+      </a>
+    )}
+    {data.repo ? (
+      <a href={data.repo} target="_blank" rel="noopener" class="project-link">
+        Code on GitHub <Icon name="arrow-up-right" size={14} />
+      </a>
+    ) : (
+      <span class="project-link is-muted">Code coming soon</span>
+    )}
+  </div>
+</article>

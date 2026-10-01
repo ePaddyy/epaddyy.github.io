@@ -1,0 +1,44 @@
+---
+import { site } from '../config/site';
+---
+
+<form id="contactForm" class="contact-form reveal" action={site.formAction} method="POST">
+  <input type="hidden" name="_subject" value="New message from your portfolio" />
+  <!-- Honeypot: hidden from people, filled in by bots; Formspree drops those submissions. -->
+  <div class="visually-hidden" aria-hidden="true">
+    <label for="f-gotcha">Leave this field empty</label>
+    <input id="f-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+  </div>
+  <div class="field-row">
+    <div class="field">
+      <label for="f-name">Name</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required />
+    </div>
+    <div class="field">
+      <label for="f-email">Email</label>
+      <input id="f-email" name="email" type="email" autocomplete="email" required />
+    </div>
+  </div>
+  <div class="field">
+    <label for="f-topic">Subject</label>
+    <input
+      id="f-topic"
+      name="subject"
+      type="text"
+      placeholder="e.g. ML engineer role, freelance project"
+      required
+    />
+  </div>
+  <div class="field">
+    <label for="f-msg">Message</label>
+    <textarea id="f-msg" name="message" rows="5" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">
+    Send message
+  </button>
+  <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  import '../scripts/contact-form';
+</script>

@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, getPosts } from '../../lib/content';
+
+// The /writing/ page only exists once at least one post is published
+// (rest parameter `undefined` = the folder's index URL).
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.length ? [{ params: { index: undefined }, props: { posts } }] : [];
+}
+
+const { posts } = Astro.props;
+---
+
+<BaseLayout
+  title="Writing"
+  description="Articles on machine learning, data analysis and building a data career in Ghana."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="section-kicker">Writing</p>
+      <h1>Notes &amp; articles</h1>
+      <p class="page-lead">
+        Write-ups on the projects I build, what the data showed, and lessons from working in data in
+        Accra.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container">
+      <div class="post-list">
+        {posts.map((post) => (
+          <article class="post reveal">
+            <div class="post-meta">
+              {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+              <time datetime={post.data.publishedAt.toISOString()}>
+                {formatDate(post.data.publishedAt)}
+              </time>
+              {post.data.draft && <span class="post-status">Draft</span>}
+            </div>
+            <h2 class="post-title">
+              <a href={`/writing/${post.id}/`}>{post.data.title}</a>
+            </h2>
+            <p class="post-excerpt">{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

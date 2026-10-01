@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-name">{site.name}</div>
+      <div class="footer-sub">
+        {site.role} · {site.location} · <a href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
+    </div>
+    <ul class="footer-social">
+      {site.socials.map((s) => (
+        <li>
+          <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}>
+            <Icon name={s.icon} />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="footer-copy">
+      © {year} {site.name}
+    </div>
+  </div>
+</footer>

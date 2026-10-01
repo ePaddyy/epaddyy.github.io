@@ -1,0 +1,41 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN TOKENS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f7f8fa;
+  --surface: #ffffff;
+  --border: #e4e7ec;
+  --border-strong: #d0d5dd;
+  --text: #101828;
+  --text-2: #344054;
+  --muted: #667085;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-soft: #eff4ff;
+  --success: #12b76a;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 8px 24px -6px rgba(16, 24, 40, 0.1), 0 2px 6px -2px rgba(16, 24, 40, 0.05);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --header-h: 68px;
+  --font: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #0b0f17;
+  --bg-alt: #111722;
+  --surface: #141b27;
+  --border: #222b3a;
+  --border-strong: #2f3a4d;
+  --text: #f2f4f7;
+  --text-2: #d0d5dd;
+  --muted: #98a2b3;
+  --accent: #6b9bff;
+  --accent-hover: #8fb3ff;
+  --accent-soft: rgba(107, 155, 255, 0.12);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}

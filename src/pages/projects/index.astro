@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { categoryLabels, getProjects } from '../../lib/content';
+
+const projects = await getProjects();
+const filters = [
+  { id: 'all', label: 'All', count: projects.length },
+  ...Object.entries(categoryLabels).map(([id, label]) => ({
+    id,
+    label,
+    count: projects.filter((p) => p.data.category === id).length,
+  })),
+].filter((f) => f.count > 0);
+---
+
+<BaseLayout
+  title="Projects"
+  description="Machine learning models, analytics and dashboards by Emmanuel Paddy Adams, machine learning engineer in Accra."
+  image="/og/projects.png"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="section-kicker">Work</p>
+      <h1>Projects</h1>
+      <p class="page-lead">
+        Machine learning models, analyses and dashboards. Each card shows the approach, the
+        evaluation metric and why the problem matters. Projects with a case study have a full
+        write-up.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="container">
+      <div class="filter-bar" role="group" aria-label="Filter projects">
+        {filters.map((f, i) => (
+          <button
+            class:list={['filter-btn', { 'is-active': i === 0 }]}
+            type="button"
+            data-filter={f.id}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {f.label} <span>{f.count}</span>
+          </button>
+        ))}
+      </div>
+      <div class="project-grid" id="projectGrid">
+        {projects.map((p) => (
+          <ProjectCard project={p} wide={p.data.featured} headingLevel="h2" />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import '../../scripts/project-filter';
+</script>

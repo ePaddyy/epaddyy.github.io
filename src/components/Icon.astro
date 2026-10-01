@@ -1,0 +1,30 @@
+---
+import { getIcon, type IconName } from '../lib/icons';
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+  /** Accessible label. Omit for decorative icons (the default). */
+  label?: string;
+}
+
+const { name, size = 18, class: className, label } = Astro.props;
+const icon = getIcon(name);
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill={icon.filled ? 'currentColor' : 'none'}
+  stroke={icon.filled ? 'none' : 'currentColor'}
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  set:html={icon.body}
+/>

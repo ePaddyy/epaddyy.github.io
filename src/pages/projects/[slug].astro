@@ -1,0 +1,82 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Stats from '../../components/Stats.astro';
+import { categoryLabels, getProjects } from '../../lib/content';
+
+// One page per project that has a case study.
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects
+    .filter((p) => p.data.caseStudy)
+    .map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const caseStudy = data.caseStudy!;
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  title={`${data.title}: case study`}
+  description={data.summary}
+  image={`/og/projects/${project.id}.png`}
+  type="article"
+>
+  <article class="case-study">
+    <header class="page-hero">
+      <div class="container case-narrow">
+        <a href="/projects/" class="back-link">
+          ← All projects
+        </a>
+        <p class="section-kicker">Case study · {categoryLabels[data.category]}</p>
+        <h1>{caseStudy.headline}</h1>
+        <p class="page-lead">{data.summary}</p>
+        <div class="hero-cta">
+          {data.demo && (
+            <a href={data.demo} target="_blank" rel="noopener" class="btn btn-primary">
+              Try the live demo
+            </a>
+          )}
+          {data.repo && (
+            <a
+              href={data.repo}
+              target="_blank"
+              rel="noopener"
+              class:list={['btn', data.demo ? 'btn-secondary' : 'btn-primary']}
+            >
+              View code on GitHub
+            </a>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <div class="container case-narrow">
+      <dl class="case-facts">
+        {caseStudy.facts.map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <Stats items={caseStudy.results} class="case-results" />
+
+      <div class="case-body prose markdown">
+        <Content />
+      </div>
+
+      <div class="case-footer">
+        <a href="/projects/" class="text-link">
+          ← Back to all projects
+        </a>
+        <a href="/#contact" class="btn btn-secondary">
+          Get in touch
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,315 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import Stats from '../components/Stats.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import TimelineItem from '../components/TimelineItem.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../config/site';
+import {
+  formatDateRange,
+  getCertifications,
+  getEducation,
+  getExperience,
+  getHomeProjects,
+  getProjects,
+  projectUrl,
+} from '../lib/content';
+
+const projects = await getProjects();
+const homeProjects = await getHomeProjects();
+const experience = await Promise.all(
+  (await getExperience()).map(async (e) => ({ entry: e, Content: (await render(e)).Content })),
+);
+const education = await getEducation();
+const certifications = await getCertifications();
+
+const flagship = projects.find((p) => p.data.featured && p.data.caseStudy);
+const building = projects.find((p) => p.data.status === 'in-progress');
+
+// Headline numbers come straight from the project files: change a metric there, it changes here.
+const metricStats = projects
+  .filter((p) => p.data.category === 'ml' && p.data.status === 'complete' && p.data.metric)
+  .slice(0, 2)
+  .map((p) => ({
+    value: p.data.metric!.value,
+    label: `${p.data.metric!.name} · ${p.data.title}`,
+  }));
+const stats = [
+  ...metricStats,
+  { value: String(projects.length), label: 'Projects published' },
+  { value: String(certifications.length), label: 'Data certifications' },
+];
+---
+
+<BaseLayout>
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">
+          <span class="status-dot" aria-hidden="true"></span> {site.availability}
+        </p>
+        <h1>{site.name}</h1>
+        <p class="hero-role">{site.role}</p>
+        <p class="hero-lead">
+          I build machine learning models end to end: collecting and cleaning messy real-world data,
+          engineering features, and training and evaluating models honestly. Then I get them out of
+          the notebook and into tools people can use.
+        </p>
+        <div class="hero-cta">
+          {flagship && (
+            <a href={projectUrl(flagship)} class="btn btn-primary">
+              Read the featured case study
+            </a>
+          )}
+          <a href="/projects/" class="btn btn-secondary">
+            All projects
+          </a>
+        </div>
+        <ul class="hero-meta">
+          <li>
+            <Icon name="map-pin" size={15} /> {site.location}
+          </li>
+          {building && (
+            <li>
+              <Icon name="clock" size={15} /> Currently building: {building.data.title}
+            </li>
+          )}
+          <li>
+            <Icon name="download" size={15} />
+            <a href={site.cv} target="_blank" rel="noopener">
+              Download CV (PDF)
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="hero-photo reveal">
+        <Photo />
+      </div>
+    </div>
+    <div class="container">
+      <Stats items={stats} />
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container split">
+      <div class="section-head reveal">
+        <p class="section-kicker">About</p>
+        <h2>Statistics first, engineering close behind.</h2>
+      </div>
+      <div class="prose reveal">
+        <p>
+          I'm a <strong>machine learning engineer</strong> in Accra, Ghana, with a degree in{' '}
+          <strong>Statistics with Computer Science</strong> from the University of Ghana. That
+          grounding shapes how I work. I care as much about how a model is evaluated as how it's
+          built, and I'd rather report an honest number than an impressive one.
+        </p>
+        <p>
+          I've built regression and classification models on agricultural, automotive and telecom
+          data. They include a <strong>district-level maize yield model</strong> that combines
+          Ghanaian yield records with NASA satellite weather data. I've also built analytics
+          dashboards, including one on a 286-person survey of Ghana's tech workforce, and worked
+          with insurance data as a data analyst intern at Unique Insurance.
+        </p>
+        <p>
+          My current focus is the engineering side of ML: reproducible pipelines, time-aware
+          validation, and serving models behind simple apps and APIs.
+        </p>
+        <ul class="focus-list">
+          {[
+            'Regression & classification models',
+            'Feature engineering & validation',
+            'scikit-learn pipelines & model packaging',
+            'Analytics & BI dashboards',
+          ].map((item) => (
+            <li>
+              <Icon name="check" size={16} /> {item}
+            </li>
+          ))}
+        </ul>
+        <p class="aside">Outside of work: football, reading, music, gaming and content creation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
+  <section id="work" class="section section-alt">
+    <div class="container">
+      <div class="section-head section-head-row reveal">
+        <div>
+          <p class="section-kicker">Selected work</p>
+          <h2>Featured projects</h2>
+        </div>
+        <a href="/projects/" class="text-link">
+          All projects →
+        </a>
+      </div>
+      <div class="project-grid">
+        {homeProjects.map((p, i) => (
+          <ProjectCard project={p} wide={i === 0} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-kicker">Experience</p>
+        <h2>Experience &amp; education</h2>
+      </div>
+      <div class="experience-grid">
+        <div class="reveal">
+          <h3 class="col-title">Work</h3>
+          <ol class="timeline">
+            {experience.map(({ entry, Content }) => (
+              <TimelineItem
+                title={entry.data.role}
+                subtitle={`${entry.data.org} · ${entry.data.location}`}
+                dates={formatDateRange(entry.data.start, entry.data.end)}
+                link={entry.data.link}
+              >
+                <Content />
+              </TimelineItem>
+            ))}
+          </ol>
+        </div>
+        <div class="reveal">
+          <h3 class="col-title">Education</h3>
+          <ol class="timeline">
+            {education.map((e) => (
+              <TimelineItem
+                title={e.data.degree}
+                subtitle={e.data.org}
+                dates={e.data.year}
+                detail={e.data.courses.join(', ')}
+              />
+            ))}
+          </ol>
+          <h3 class="col-title">Training &amp; certifications</h3>
+          <ul class="cert-list">
+            {certifications.map((c) => (
+              <li>
+                <span>
+                  <strong>{c.data.org}</strong> · {c.data.title}
+                </span>
+                <span class="muted">{c.data.year}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section section-alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-kicker">Skills</p>
+        <h2>What I do</h2>
+      </div>
+      <div class="capabilities">
+        <div class="capability reveal">
+          <h3>Machine learning</h3>
+          <p>
+            Regression and classification with linear models (OLS, Lasso, Ridge) and tree ensembles
+            (Random Forest, Gradient Boosting, XGBoost). I handle class imbalance, tune with
+            cross-validation, and pick metrics that match the business cost of errors.
+          </p>
+          <ul class="tag-list">
+            <li>scikit-learn</li>
+            <li>XGBoost</li>
+            <li>SMOTE</li>
+            <li>Cross-validation</li>
+          </ul>
+        </div>
+        <div class="capability reveal">
+          <h3>Data pipelines</h3>
+          <p>
+            Collecting data from APIs and messy files, joining sources reliably, and engineering
+            features (lags, encodings, aggregations) inside reproducible scikit-learn pipelines that
+            can be saved and served.
+          </p>
+          <ul class="tag-list">
+            <li>Python</li>
+            <li>Pandas</li>
+            <li>NumPy</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+        <div class="capability reveal">
+          <h3>Analytics &amp; communication</h3>
+          <p>
+            Exploratory analysis and interactive dashboards that turn results into decisions for
+            non-technical stakeholders, plus clear write-ups of what a model can and can't do.
+          </p>
+          <ul class="tag-list">
+            <li>Power BI</li>
+            <li>DAX</li>
+            <li>Matplotlib</li>
+            <li>Seaborn</li>
+          </ul>
+        </div>
+      </div>
+      <div class="toolkit reveal">
+        <h3>Toolkit</h3>
+        <div class="toolkit-groups">
+          <div>
+            <h4>Languages</h4>
+            <p>Python, SQL</p>
+          </div>
+          <div>
+            <h4>ML &amp; data</h4>
+            <p>scikit-learn, XGBoost, Pandas, NumPy</p>
+          </div>
+          <div>
+            <h4>Databases &amp; BI</h4>
+            <p>MySQL, PostgreSQL, Power BI, Excel</p>
+          </div>
+          <div>
+            <h4>Workflow</h4>
+            <p>Git, GitHub, Jupyter, VS Code</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container split">
+      <div class="reveal">
+        <p class="section-kicker">Contact</p>
+        <h2>Let's work together.</h2>
+        <p class="contact-lead">
+          I'm looking for machine learning and data roles, and I'm open to freelance and research
+          collaborations. The quickest way to reach me is by email.
+        </p>
+        <ul class="contact-links">
+          <li>
+            <a href={`mailto:${site.email}`}>
+              <span>Email</span>
+              <span class="muted">{site.email}</span>
+            </a>
+          </li>
+          {site.socials.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener">
+                <span>{s.label}</span>
+                <span class="muted">{s.handle}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+</BaseLayout>

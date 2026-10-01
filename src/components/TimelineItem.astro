@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  dates: string;
+  detail?: string;
+  link?: string;
+}
+
+const { title, subtitle, dates, detail, link } = Astro.props;
+---
+
+<li class="timeline-item">
+  <div class="timeline-dates">{dates}</div>
+  <div class="timeline-body">
+    <h4>{title}</h4>
+    <p class="timeline-org">{subtitle}</p>
+    {detail && <p class="timeline-detail">{detail}</p>}
+    <div class="timeline-points">
+      <slot />
+    </div>
+    {link && (
+      <a href={link} target="_blank" rel="noopener" class="text-link timeline-link">
+        View project <Icon name="arrow-up-right" size={14} />
+      </a>
+    )}
+  </div>
+</li>

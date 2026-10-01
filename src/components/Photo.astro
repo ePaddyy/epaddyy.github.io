@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { site } from '../config/site';
+
+// Uses src/assets/profile.(jpg|jpeg|png|webp) if present; otherwise shows initials.
+// Astro resizes it and serves modern formats automatically.
+const files = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/profile.{jpg,jpeg,png,webp}',
+  {
+    eager: true,
+  },
+);
+const photo = Object.values(files)[0]?.default;
+---
+
+<div class:list={['photo-frame', { 'no-photo': !photo }]}>
+  {photo ? (
+    <Image
+      src={photo}
+      alt={`Portrait of ${site.name}`}
+      widths={[320, 480, 800]}
+      sizes="(max-width: 960px) 300px, 400px"
+      loading="eager"
+      fetchpriority="high"
+    />
+  ) : (
+    <span class="photo-fallback" aria-hidden="true">
+      {site.shortName}
+    </span>
+  )}
+</div>

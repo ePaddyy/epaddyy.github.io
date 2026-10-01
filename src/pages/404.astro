@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" description="This page does not exist." noindex>
+  <section class="not-found">
+    <div class="container">
+      <p class="code">404</p>
+      <h1>This page doesn't exist.</h1>
+      <p>The link may be out of date, or the page may have moved.</p>
+      <div class="hero-cta">
+        <a href="/" class="btn btn-primary">
+          Go to the home page
+        </a>
+        <a href="/projects/" class="btn btn-secondary">
+          See projects
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
