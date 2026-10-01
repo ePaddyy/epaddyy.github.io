@@ -1,5 +1,5 @@
 ---
-import { render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import Photo from '../components/Photo.astro';
@@ -25,6 +25,17 @@ const experience = await Promise.all(
 );
 const education = await getEducation();
 const certifications = await getCertifications();
+
+// Home-page text lives in src/content/home/*.md
+const section = async (id: string) => {
+  const entry = await getEntry('home', id);
+  if (!entry) throw new Error(`Missing src/content/home/${id}.md`);
+  return { data: entry.data, Content: (await render(entry)).Content };
+};
+const hero = await section('hero');
+const about = await section('about');
+const skills = await section('skills');
+const contact = await section('contact');
 
 const flagship = projects.find((p) => p.data.featured && p.data.caseStudy);
 const building = projects.find((p) => p.data.status === 'in-progress');
@@ -54,11 +65,9 @@ const stats = [
         </p>
         <h1>{site.name}</h1>
         <p class="hero-role">{site.role}</p>
-        <p class="hero-lead">
-          I build machine learning models end to end: collecting and cleaning messy real-world data,
-          engineering features, and training and evaluating models honestly. Then I get them out of
-          the notebook and into tools people can use.
-        </p>
+        <div class="hero-lead">
+          <hero.Content />
+        </div>
         <div class="hero-cta">
           {flagship && (
             <a href={projectUrl(flagship)} class="btn btn-primary">
@@ -100,39 +109,20 @@ const stats = [
     <div class="container split">
       <div class="section-head reveal">
         <p class="section-kicker">About</p>
-        <h2>Statistics first, engineering close behind.</h2>
+        <h2>{about.data.heading}</h2>
       </div>
       <div class="prose reveal">
-        <p>
-          I'm a <strong>machine learning engineer</strong> in Accra, Ghana, with a degree in{' '}
-          <strong>Statistics with Computer Science</strong> from the University of Ghana. That
-          grounding shapes how I work. I care as much about how a model is evaluated as how it's
-          built, and I'd rather report an honest number than an impressive one.
-        </p>
-        <p>
-          I've built regression and classification models on agricultural, automotive and telecom
-          data. They include a <strong>district-level maize yield model</strong> that combines
-          Ghanaian yield records with NASA satellite weather data. I've also built analytics
-          dashboards, including one on a 286-person survey of Ghana's tech workforce, and worked
-          with insurance data as a data analyst intern at Unique Insurance.
-        </p>
-        <p>
-          My current focus is the engineering side of ML: reproducible pipelines, time-aware
-          validation, and serving models behind simple apps and APIs.
-        </p>
-        <ul class="focus-list">
-          {[
-            'Regression & classification models',
-            'Feature engineering & validation',
-            'scikit-learn pipelines & model packaging',
-            'Analytics & BI dashboards',
-          ].map((item) => (
-            <li>
-              <Icon name="check" size={16} /> {item}
-            </li>
-          ))}
-        </ul>
-        <p class="aside">Outside of work: football, reading, music, gaming and content creation.</p>
+        <about.Content />
+        {about.data.focus && (
+          <ul class="focus-list">
+            {about.data.focus.map((item) => (
+              <li>
+                <Icon name="check" size={16} /> {item}
+              </li>
+            ))}
+          </ul>
+        )}
+        {about.data.outside && <p class="aside">{about.data.outside}</p>}
       </div>
     </div>
   </section>
@@ -213,72 +203,34 @@ const stats = [
     <div class="container">
       <div class="section-head reveal">
         <p class="section-kicker">Skills</p>
-        <h2>What I do</h2>
+        <h2>{skills.data.heading}</h2>
       </div>
       <div class="capabilities">
-        <div class="capability reveal">
-          <h3>Machine learning</h3>
-          <p>
-            Regression and classification with linear models (OLS, Lasso, Ridge) and tree ensembles
-            (Random Forest, Gradient Boosting, XGBoost). I handle class imbalance, tune with
-            cross-validation, and pick metrics that match the business cost of errors.
-          </p>
-          <ul class="tag-list">
-            <li>scikit-learn</li>
-            <li>XGBoost</li>
-            <li>SMOTE</li>
-            <li>Cross-validation</li>
-          </ul>
-        </div>
-        <div class="capability reveal">
-          <h3>Data pipelines</h3>
-          <p>
-            Collecting data from APIs and messy files, joining sources reliably, and engineering
-            features (lags, encodings, aggregations) inside reproducible scikit-learn pipelines that
-            can be saved and served.
-          </p>
-          <ul class="tag-list">
-            <li>Python</li>
-            <li>Pandas</li>
-            <li>NumPy</li>
-            <li>SQL</li>
-          </ul>
-        </div>
-        <div class="capability reveal">
-          <h3>Analytics &amp; communication</h3>
-          <p>
-            Exploratory analysis and interactive dashboards that turn results into decisions for
-            non-technical stakeholders, plus clear write-ups of what a model can and can't do.
-          </p>
-          <ul class="tag-list">
-            <li>Power BI</li>
-            <li>DAX</li>
-            <li>Matplotlib</li>
-            <li>Seaborn</li>
-          </ul>
-        </div>
+        {skills.data.capabilities?.map((c) => (
+          <div class="capability reveal">
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+            <ul class="tag-list">
+              {c.tags.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <div class="toolkit reveal">
-        <h3>Toolkit</h3>
-        <div class="toolkit-groups">
-          <div>
-            <h4>Languages</h4>
-            <p>Python, SQL</p>
-          </div>
-          <div>
-            <h4>ML &amp; data</h4>
-            <p>scikit-learn, XGBoost, Pandas, NumPy</p>
-          </div>
-          <div>
-            <h4>Databases &amp; BI</h4>
-            <p>MySQL, PostgreSQL, Power BI, Excel</p>
-          </div>
-          <div>
-            <h4>Workflow</h4>
-            <p>Git, GitHub, Jupyter, VS Code</p>
+      {skills.data.toolkit && (
+        <div class="toolkit reveal">
+          <h3>Toolkit</h3>
+          <div class="toolkit-groups">
+            {skills.data.toolkit.map((g) => (
+              <div>
+                <h4>{g.group}</h4>
+                <p>{g.items}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
     </div>
   </section>
 
@@ -287,11 +239,10 @@ const stats = [
     <div class="container split">
       <div class="reveal">
         <p class="section-kicker">Contact</p>
-        <h2>Let's work together.</h2>
-        <p class="contact-lead">
-          I'm looking for machine learning and data roles, and I'm open to freelance and research
-          collaborations. The quickest way to reach me is by email.
-        </p>
+        <h2>{contact.data.heading}</h2>
+        <div class="contact-lead">
+          <contact.Content />
+        </div>
         <ul class="contact-links">
           <li>
             <a href={`mailto:${site.email}`}>

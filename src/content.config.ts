@@ -94,4 +94,18 @@ const writing = defineCollection({
   }),
 });
 
-export const collections = { projects, experience, education, certifications, writing };
+/** Text for the home-page sections (hero, about, skills, contact): one Markdown file each. */
+const home = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/home' }),
+  schema: z.object({
+    heading: z.string(),
+    focus: z.array(z.string()).optional(),
+    outside: z.string().optional(),
+    capabilities: z
+      .array(z.object({ title: z.string(), text: z.string(), tags: z.array(z.string()) }))
+      .optional(),
+    toolkit: z.array(z.object({ group: z.string(), items: z.string() })).optional(),
+  }),
+});
+
+export const collections = { projects, experience, education, certifications, writing, home };

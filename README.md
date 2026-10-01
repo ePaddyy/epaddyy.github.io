@@ -5,6 +5,8 @@ Built with [Astro](https://astro.build), deployed to GitHub Pages by GitHub Acti
 
 **Live:** https://epaddyy.github.io
 
+> **New to this project? Read [HOW-TO-UPDATE.md](HOW-TO-UPDATE.md):** a step-by-step guide to running the site and changing any section.
+
 ## Quick start
 
 Requires Node.js 24 (see `.nvmrc`).
@@ -35,7 +37,8 @@ src/
 │   ├── experience/        jobs/internships (frontmatter + bullet points)
 │   ├── education/
 │   ├── certifications/
-│   └── writing/           articles (draft: true = hidden in production)
+│   ├── writing/           articles (draft: true = hidden in production)
+│   └── home/              text for the home-page hero, about, skills and contact sections
 ├── content.config.ts      schemas: which fields each content type must have
 ├── components/            Header, Footer, ProjectCard, TimelineItem, Stats, Photo, ContactForm, SEO, Icon
 ├── layouts/BaseLayout.astro
