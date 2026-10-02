@@ -1,6 +1,6 @@
 ---
 interface Props {
-  items: { value: string; label: string }[];
+  items: { value: string; label: string; note?: string }[];
   class?: string;
 }
 
@@ -11,7 +11,10 @@ const { items, class: className } = Astro.props;
   {items.map((s) => (
     <div class="stat">
       <dt>{s.label}</dt>
-      <dd>{s.value}</dd>
+      <dd>
+        {s.value}
+        {s.note && <span class="stat-note">{s.note}</span>}
+      </dd>
     </div>
   ))}
 </dl>

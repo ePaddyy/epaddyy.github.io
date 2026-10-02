@@ -5,11 +5,11 @@
 export const site = {
   name: 'Emmanuel Paddy Adams',
   shortName: 'EPA',
-  role: 'Machine Learning Engineer',
+  role: 'Data Scientist and Machine Learning Engineer',
   location: 'Accra, Ghana',
   description:
-    'Emmanuel Paddy Adams is a machine learning engineer in Accra, Ghana who builds, evaluates and ships predictive models, from raw data to working tools.',
-  email: 'epaddyy@gmail.com',
+    'Emmanuel Paddy Adams is a data scientist and machine learning engineer in Accra, Ghana who builds, evaluates and ships predictive models, from raw data to working tools.',
+  email: 'emmanuelpaddyadams@gmail.com',
   /** Path under /public. */
   cv: '/cv/emmanuel-paddy-adams-cv.pdf',
   availability: 'Open to ML & data roles · on-site in Accra or remote',

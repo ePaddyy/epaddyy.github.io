@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 export type Project = CollectionEntry<'projects'>;
 
 export const categoryLabels: Record<Project['data']['category'], string> = {
-  ml: 'Machine learning',
+  ml: 'Data Science & Machine Learning',
   analytics: 'Analysis',
   bi: 'Dashboards & BI',
 };

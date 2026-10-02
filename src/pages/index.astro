@@ -47,6 +47,7 @@ const metricStats = projects
   .map((p) => ({
     value: p.data.metric!.value,
     label: `${p.data.metric!.name} · ${p.data.title}`,
+    note: p.data.metric!.note,
   }));
 const stats = [
   ...metricStats,
@@ -64,7 +65,7 @@ const stats = [
           <span class="status-dot" aria-hidden="true"></span> {site.availability}
         </p>
         <h1>{site.name}</h1>
-        <p class="hero-role">{site.role}</p>
+        <p class="hero-role">I am a {site.role}.</p>
         <div class="hero-lead">
           <hero.Content />
         </div>
@@ -74,8 +75,8 @@ const stats = [
               Read the featured case study
             </a>
           )}
-          <a href="/projects/" class="btn btn-secondary">
-            All projects
+          <a href={site.cv} target="_blank" rel="noopener" class="btn btn-secondary">
+            <Icon name="download" size={16} /> Download CV
           </a>
         </div>
         <ul class="hero-meta">
@@ -87,12 +88,6 @@ const stats = [
               <Icon name="clock" size={15} /> Currently building: {building.data.title}
             </li>
           )}
-          <li>
-            <Icon name="download" size={15} />
-            <a href={site.cv} target="_blank" rel="noopener">
-              Download CV (PDF)
-            </a>
-          </li>
         </ul>
       </div>
       <div class="hero-photo reveal">

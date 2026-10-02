@@ -9,7 +9,7 @@ showOnHome: true
 metric:
   name: R²
   value: '0.95'
-  note: random 80/20 split
+  note: Random 80/20 split; likely optimistic
 tags: [Python, scikit-learn, Pandas, NASA POWER API, Ensembles]
 repo: https://github.com/ePaddyy/ghana-maize-yield-prediction
 approach: Standardised district names to merge yield, weather and soil sources; aggregated daily NASA weather into April–August growing-season features; added a previous-year yield lag, pest-outbreak and Planting for Food and Jobs policy indicators; trained a voting ensemble inside a scikit-learn pipeline.

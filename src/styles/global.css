@@ -30,20 +30,26 @@ body {
 }
 
 h1,
-h2,
+h2 {
+  font-family: var(--font-display);
+  color: var(--text);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+h2 {
+  font-size: 2rem;
+}
 h3,
 h4 {
   color: var(--text);
   line-height: 1.2;
   font-weight: 600;
-  letter-spacing: -0.02em;
-}
-h2 {
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  letter-spacing: 0;
 }
 h3 {
   font-size: 1.125rem;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 p {
   max-width: 68ch;
@@ -221,7 +227,7 @@ strong {
 .brand-name {
   font-weight: 600;
   font-size: 0.975rem;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 .site-nav {
@@ -366,9 +372,9 @@ strong {
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  font-size: 3.75rem;
   font-weight: 700;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 1.05;
 }
 .hero-role {
@@ -433,7 +439,7 @@ strong {
   place-items: center;
   font-size: 4.5rem;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   color: var(--accent);
   opacity: 0.85;
 }
@@ -450,6 +456,14 @@ strong {
   background: var(--surface);
   box-shadow: var(--shadow-sm);
 }
+.stat-note {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
 .stat {
   padding: 1.5rem 1.75rem;
   display: flex;
@@ -463,7 +477,7 @@ strong {
   font-size: 2rem;
   font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.1;
 }
 .stat dt {
@@ -537,6 +551,7 @@ strong {
 }
 .project-card.is-featured {
   grid-column: 1 / -1;
+  border-top: 3px solid var(--accent);
 }
 .project-card.is-featured .project-title {
   font-size: 1.5rem;
@@ -892,9 +907,9 @@ strong {
   padding: 4.5rem 0 1.5rem;
 }
 .page-hero h1 {
-  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  font-size: 3rem;
   font-weight: 700;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
 }
 .page-lead {
   margin-top: 1rem;
@@ -1308,6 +1323,15 @@ strong {
   }
   .hero {
     padding: 3rem 0 3rem;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  .page-hero h1 {
+    font-size: 2.25rem;
   }
   .brand-name {
     display: none;
