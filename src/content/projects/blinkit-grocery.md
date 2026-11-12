@@ -3,7 +3,7 @@ title: Blinkit Grocery Sales Analysis
 summary: SQL analysis and an interactive Power BI dashboard on 8,523 grocery items sold across 10 Blinkit outlets, covering 1.2M in total sales broken down by item type, fat content, outlet size and city tier.
 category: bi
 icon: bar-chart
-order: 6
+order: 7
 metric:
   name: Items analysed
   value: 8,523

@@ -3,7 +3,7 @@ title: Ghana Tech Ecosystem Survey 2025
 summary: Turned raw survey responses from 286 Ghanaian tech professionals into a 4-page interactive Power BI dashboard covering roles, skills gaps, AI tool adoption, income and ecosystem needs.
 category: analytics
 icon: globe
-order: 4
+order: 6
 showOnHome: true
 metric:
   name: Respondents

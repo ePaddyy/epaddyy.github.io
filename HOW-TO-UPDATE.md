@@ -42,7 +42,6 @@ A step-by-step guide. You don't need to know web development: almost everything 
    ```
    npm run dev
    ```
-
 3. Wait for a line like `Local: http://localhost:4321/`. Hold <kbd>Ctrl</kbd> and click it (or type that address into Chrome).
 4. Leave the terminal running. **Every time you save a file, the browser updates by itself.**
 5. When you're finished, click in the terminal and press <kbd>Ctrl</kbd> + <kbd>C</kbd> to stop it.
@@ -67,22 +66,22 @@ To look at the exact production version: `npm run build` then `npm run preview`,
 
 All paths are inside the `epaddyy.github.io` folder.
 
-| What you see on the site                                                       | File to edit                                                       |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| Your name, job title, location, email, "Open to…" badge, social links, CV link | `src/config/site.ts`                                               |
-| Paragraph under your name (top of home page)                                   | `src/content/home/hero.md`                                         |
-| About section                                                                  | `src/content/home/about.md`                                        |
-| Skills section ("What I do" + Toolkit)                                         | `src/content/home/skills.md`                                       |
-| Contact section text                                                           | `src/content/home/contact.md`                                      |
-| Projects (cards on the home page and Work page)                                | `src/content/projects/` (one file per project)                     |
-| Case study pages (e.g. the maize one)                                          | the same project file, below the `---` lines                       |
-| Work experience                                                                | `src/content/experience/` (one file per job)                       |
-| Education                                                                      | `src/content/education/`                                           |
-| Training & certifications                                                      | `src/content/certifications/`                                      |
-| Articles / Writing page                                                        | `src/content/writing/`                                             |
-| Your photo                                                                     | `src/assets/profile.jpg`                                           |
-| Your CV (PDF)                                                                  | `public/cv/emmanuel-paddy-adams-cv.pdf`                            |
-| The four numbers under your name (0.95, 0.87, 7, 3)                            | Calculated automatically from your project and certification files |
+| What you see on the site                                                        | File to edit                                                       |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Your name, job title, location, email, "Open to…" badge, social links, CV link | `src/config/site.ts`                                             |
+| Paragraph under your name (top of home page)                                    | `src/content/home/hero.md`                                       |
+| About section                                                                   | `src/content/home/about.md`                                      |
+| Skills section ("What I do" + Toolkit)                                          | `src/content/home/skills.md`                                     |
+| Contact section text                                                            | `src/content/home/contact.md`                                    |
+| Projects (cards on the home page and Work page)                                 | `src/content/projects/` (one file per project)                   |
+| Case study pages (e.g. the maize one)                                           | the same project file, below the `---` lines                     |
+| Work experience                                                                 | `src/content/experience/` (one file per job)                     |
+| Education                                                                       | `src/content/education/`                                         |
+| Training & certifications                                                       | `src/content/certifications/`                                    |
+| Articles / Writing page                                                         | `src/content/writing/`                                           |
+| Your photo                                                                      | `src/assets/profile.jpg`                                         |
+| Your CV (PDF)                                                                   | `public/cv/emmanuel-paddy-adams-cv.pdf`                          |
+| The four numbers under your name (0.95, 0.87, 7, 3)                             | Calculated automatically from your project and certification files |
 
 ---
 
@@ -104,19 +103,23 @@ Normal writing goes here. ← "body": paragraphs, lists, headings
 
 1. **Format is `name: value`.** There must be a space after the colon.
 2. **Indentation uses spaces, never Tab**, and it matters. Lines that belong to a group are indented by 2 spaces:
+
    ```yaml
    metric:
      name: R²
      value: '0.95'
    ```
 3. **Put text in single quotes `'...'` if it contains a colon `:`, starts with a number, or contains `#`.**
+
    - ✅ `value: '0.95'` ✅ `outside: 'Outside of work: football'`
    - ❌ `outside: Outside of work: football` (the second colon confuses it)
 4. **Apostrophes inside single quotes are written twice:** `'I''m open to roles'`. Or use double quotes instead: `"I'm open to roles"`.
 5. **Lists** can be written either way:
+
    ```yaml
    tags: [Python, SQL, Power BI]
    ```
+
    ```yaml
    focus:
      - First item
@@ -126,15 +129,15 @@ Normal writing goes here. ← "body": paragraphs, lists, headings
 
 ### Writing in the body (Markdown)
 
-| You type                           | You get           |
-| ---------------------------------- | ----------------- |
-| `**bold**`                         | **bold**          |
-| `*italic*`                         | _italic_          |
+| You type                             | You get           |
+| ------------------------------------ | ----------------- |
+| `**bold**`                         | **bold**    |
+| `*italic*`                         | _italic_        |
 | `[link text](https://example.com)` | a link            |
 | `- item` at the start of a line    | a bullet point    |
 | `## Heading`                       | a section heading |
-| A blank line between paragraphs    | a new paragraph   |
-| `` `code` ``                       | `code`            |
+| A blank line between paragraphs      | a new paragraph   |
+| `` `code` ``                         | `code`          |
 
 ### The safety net
 
@@ -172,23 +175,23 @@ impact: Why this matters / who would use it.
 
 **What each setting means:**
 
-| Setting       | Required? | What to put                                                                                                                      |
-| ------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | yes       | Project name                                                                                                                     |
-| `summary`     | yes       | Card description (max ~320 characters)                                                                                           |
-| `category`    | yes       | Exactly one of: `ml`, `analytics`, `bi` (these drive the filter buttons)                                                         |
-| `icon`        | yes       | One of: `line-chart`, `bar-chart`, `gauge`, `users`, `globe`, `monitor`, `car`, `map-pin`, `clock`, `mail`, `check`              |
-| `order`       | yes       | Position on the Work page: `1` = first. Use the next free number.                                                                |
-| `tags`        | yes       | Tools/skills, in square brackets                                                                                                 |
-| `approach`    | yes       | Shown when someone clicks "Approach & impact"                                                                                    |
-| `impact`      | yes       | Shown in the same panel                                                                                                          |
-| `metric`      | no        | Your main result. `name` = metric (R², RMSE, Recall…), `value` = the number **in quotes**, `note` = optional context             |
-| `repo`        | no        | GitHub link. Leave the line out and the card says "Code coming soon".                                                            |
-| `demo`        | no        | Link to a live app (e.g. Streamlit). Adds a "Live demo" button.                                                                  |
-| `status`      | no        | `in-progress` adds an orange badge and the "Currently building" line at the top of the home page. Remove the line when finished. |
-| `featured`    | no        | `true` = card spans the full width                                                                                               |
-| `showOnHome`  | no        | `true` = card also appears in "Featured projects" on the home page (keep it to 3)                                                |
-| `publishedAt` | no        | Date, e.g. `2026-10-01`                                                                                                          |
+| Setting         | Required? | What to put                                                                                                                               |
+| --------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`       | yes       | Project name                                                                                                                              |
+| `summary`     | yes       | Card description (max ~320 characters)                                                                                                    |
+| `category`    | yes       | Exactly one of: `ml`, `analytics`, `bi` (these drive the filter buttons)                                                            |
+| `icon`        | yes       | One of: `line-chart`, `bar-chart`, `gauge`, `users`, `globe`, `monitor`, `car`, `map-pin`, `clock`, `mail`, `check` |
+| `order`       | yes       | Position on the Work page: `1` = first. Use the next free number.                                                                       |
+| `tags`        | yes       | Tools/skills, in square brackets                                                                                                          |
+| `approach`    | yes       | Shown when someone clicks "Approach & impact"                                                                                             |
+| `impact`      | yes       | Shown in the same panel                                                                                                                   |
+| `metric`      | no        | Your main result. `name` = metric (R², RMSE, Recall…), `value` = the number **in quotes**, `note` = optional context        |
+| `repo`        | no        | GitHub link. Leave the line out and the card says "Code coming soon".                                                                     |
+| `demo`        | no        | Link to a live app (e.g. Streamlit). Adds a "Live demo" button.                                                                           |
+| `status`      | no        | `in-progress` adds an orange badge and the "Currently building" line at the top of the home page. Remove the line when finished.        |
+| `featured`    | no        | `true` = card spans the full width                                                                                                      |
+| `showOnHome`  | no        | `true` = card also appears in "Featured projects" on the home page (keep it to 3)                                                       |
+| `publishedAt` | no        | Date, e.g. `2026-10-01`                                                                                                                 |
 
 > **Use real numbers from your notebooks.** For regression, use R², MAE or RMSE, not "accuracy".
 
@@ -326,7 +329,6 @@ Your site goes live automatically whenever changes reach the `main` branch on Gi
    ```
 
    A browser window may ask you to sign in to GitHub. `--force` is only needed this first time, because it replaces the old site.
-
 4. On GitHub, open the **Actions** tab. Wait for **Deploy to GitHub Pages** to show a green tick (about 1–2 minutes). Your site is live at **https://epaddyy.github.io**.
 
 ### Every time after that (using VS Code, no commands)
@@ -358,7 +360,6 @@ Your Blinkit files are in `Documents\DATA SCIENCE\DATA ANALYST\PROJECTS\BLINKIT 
    ```yaml
    repo: https://github.com/ePaddyy/Blinkit-Grocery-Sales-Analysis
    ```
-
 7. Save, then commit and push ([section 5](#every-time-after-that-using-vs-code-no-commands)).
 
 > GitHub can't preview `.pbix` files, so **screenshots in the README are what people will actually see.** The same applies to the other Power BI projects.
@@ -367,18 +368,18 @@ Your Blinkit files are in `Documents\DATA SCIENCE\DATA ANALYST\PROJECTS\BLINKIT 
 
 ## 7. When something goes wrong
 
-| What you see                                                                   | What it means / how to fix                                                                                                                                                                    |
-| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm is not recognized`                                                        | Restart VS Code (or the PC). If it persists, reinstall Node.js LTS from [nodejs.org](https://nodejs.org).                                                                                     |
-| `Missing script: "dev"`                                                        | The terminal is in the wrong folder. Use **File → Open Folder** on `epaddyy.github.io` and open a new terminal.                                                                               |
+| What you see                                                                        | What it means / how to fix                                                                                                                                                                              |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm is not recognized`                                                           | Restart VS Code (or the PC). If it persists, reinstall Node.js LTS from [nodejs.org](https://nodejs.org).                                                                                                |
+| `Missing script: "dev"`                                                           | The terminal is in the wrong folder. Use **File → Open Folder** on `epaddyy.github.io` and open a new terminal.                                                                                |
 | `InvalidContentEntryDataError … projects → my-file … category: Invalid option` | A setting in that file has a value that isn't allowed. The message names the file and the setting. For `category` it must be `ml`, `analytics` or `bi`; for `icon` see the list in section 4. |
-| `… Required` or `expected string, received undefined`                          | A required setting is missing from that file (e.g. no `title:`).                                                                                                                              |
-| `expected string, received number`                                             | Put the value in quotes: `value: '0.95'`.                                                                                                                                                     |
-| `YAMLException` / `bad indentation` / `incomplete explicit mapping pair`       | A formatting problem in the settings: usually a Tab instead of spaces, a missing space after `:`, or an unquoted value containing `:`. Check the line number it mentions.                     |
-| The browser shows the old version                                              | Save the file (<kbd>Ctrl</kbd> + <kbd>S</kbd>). If it's still stuck, refresh the page.                                                                                                        |
-| `Port 4321 is in use`                                                          | The site is already running in another terminal. Use that one, or close it with <kbd>Ctrl</kbd> + <kbd>C</kbd>.                                                                               |
-| `JavaScript heap out of memory` or `memory allocation failed`                  | The computer is low on memory. Close some apps or Chrome tabs and try again.                                                                                                                  |
-| `npm run verify` fails on "Prettier" / formatting                              | Run `npm run format`, which fixes formatting automatically, then run verify again.                                                                                                            |
+| `… Required` or `expected string, received undefined`                          | A required setting is missing from that file (e.g. no `title:`).                                                                                                                                      |
+| `expected string, received number`                                                | Put the value in quotes: `value: '0.95'`.                                                                                                                                                             |
+| `YAMLException` / `bad indentation` / `incomplete explicit mapping pair`      | A formatting problem in the settings: usually a Tab instead of spaces, a missing space after `:`, or an unquoted value containing `:`. Check the line number it mentions.                           |
+| The browser shows the old version                                                   | Save the file (<kbd>Ctrl</kbd> + <kbd>S</kbd>). If it's still stuck, refresh the page.                                                                                                                  |
+| `Port 4321 is in use`                                                             | The site is already running in another terminal. Use that one, or close it with <kbd>Ctrl</kbd> + <kbd>C</kbd>.                                                                                         |
+| `JavaScript heap out of memory` or `memory allocation failed`                   | The computer is low on memory. Close some apps or Chrome tabs and try again.                                                                                                                            |
+| `npm run verify` fails on "Prettier" / formatting                                 | Run `npm run format`, which fixes formatting automatically, then run verify again.                                                                                                                    |
 
 **Undo a change you regret:** in VS Code's Source Control panel, right-click the file → **Discard Changes** (this restores the last committed version).
 

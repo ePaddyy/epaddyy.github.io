@@ -3,9 +3,9 @@ title: Ghana Maize Yield Prediction
 summary: An end-to-end pipeline predicting district-level maize yields in Ghana. It combines yield records with growing-season weather from the NASA POWER API, soil types and policy/pest indicators, then trains a Random Forest + Gradient Boosting ensemble.
 category: ml
 icon: line-chart
-order: 1
+order: 4
 featured: true
-showOnHome: true
+showOnHome: false
 metric:
   name: R²
   value: '0.95'
@@ -26,7 +26,6 @@ caseStudy:
     - { value: '0.95', label: R² on a random held-out 20% split }
     - { value: '10', label: Input features }
 ---
-
 ## The problem
 
 Maize is one of Ghana's most important staple crops, and yields vary sharply between districts and seasons. Agencies and farmers plan inputs, storage and food-security interventions with little forward-looking information. The goal was a model that estimates a district's yield for a season from conditions that can be observed in advance.
